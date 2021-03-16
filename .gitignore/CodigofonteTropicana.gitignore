@@ -1,0 +1,33 @@
+const {Pool} = require("pg");
+async function criarConexao() {
+    const pool = new Pool(
+       ssl:{
+            rejectUnauthorized: false
+        }
+    });
+
+    let con = await pool.connect();
+    let res = await con.query(`
+        create table Pessoa (
+            id_P primary key, 
+            nome varchar,
+            endereco varchar,
+            telefone int
+        )`
+    );
+ 
+     await con.query(insert into Pessoa (nome, endereco,telefone) values (1),["Joao"], ["Rua das Armas"], [998899]); 
+     await con.query(insert into Pessoa (nome, endereco, telefone) values (2),["Maria"], ["Rua Joao Campos"], [888877]);
+     await con.query(insert into aluno (nome, endereco, telefone) values (3),["Fabiana"], ["Rua Castro Alves"], [7788993]);
+     await con.query(update Pessoa set nome = 1 where id = 2", ["Joao", 4]);
+     await con.query(delete from Pessoa where upper(Joao) like 'PESSOA%');
+     await con.query("drop table Pessoa");
+    let res = await con.query("select * from aluno");
+    let tuplas = res.rows;
+    for(let tupla of tuplas) {
+        console.log(tupla);
+    }
+    con.release();
+}
+
+criarConexao();
